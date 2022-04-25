@@ -686,7 +686,7 @@ public class Employee {
 				}
 				//================================================================
 				
-				public String updateSalary(String e, String a, String b, String c, String d) 
+				public String updateSalary(String a, String b, String c, String d, String e) 
 				 
 				 { 
 				 String output = ""; 
@@ -696,14 +696,14 @@ public class Employee {
 				 if (con == null) 
 				 {return "Error while connecting to the database for updating."; } 
 				 // create a prepared statement
-				 String query = "UPDATE salary SET year=?,amount=?,email=?,month=?  WHERE salID=?"; 
+				 String query = "UPDATE salary SET email=?,month=?,year=?,amount=? WHERE salID=?"; 
 				 PreparedStatement preparedStmt = con.prepareStatement(query); 
 				 // binding values
-				 preparedStmt.setString(1, c); 
-				 preparedStmt.setString(2, d); 
-				 preparedStmt.setString(3, a); 
-				 preparedStmt.setString(4, b); 
-				 preparedStmt.setInt(5, Integer.parseInt(e)); 
+				 preparedStmt.setString(1, a); 
+				 preparedStmt.setString(2, b); 
+				 preparedStmt.setString(3, c); 
+				 preparedStmt.setString(4, d); 
+				 preparedStmt.setString(5, e); 
 				 // execute the statement
 				 preparedStmt.execute(); 
 				 con.close(); 
@@ -716,6 +716,32 @@ public class Employee {
 				 } 
 				 return output; 
 				 }
+				
+				public String deleteItem(String itemID) 
+				 { 
+				 String output = ""; 
+				 try
+				 { 
+				 Connection con = connect(); 
+				 if (con == null) 
+				 {return "Error while connecting to the database for deleting."; } 
+				 // create a prepared statement
+				 String query = "delete from salary where salID=?"; 
+				 PreparedStatement preparedStmt = con.prepareStatement(query); 
+				 // binding values
+				 preparedStmt.setInt(1, Integer.parseInt(itemID)); 
+				 // execute the statement
+				 preparedStmt.execute(); 
+				 con.close(); 
+				 output = "Deleted successfully"; 
+				 } 
+				 catch (Exception e) 
+				 { 
+				 output = "Error while deleting the item."; 
+				 System.err.println(e.getMessage()); 
+				 } 
+				 return output; 
+				 } 
 				
 }
 				

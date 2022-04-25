@@ -112,7 +112,7 @@ return output;
 }
 
 @PUT
-@Path("/six") 
+@Path("/") 
 @Consumes(MediaType.APPLICATION_JSON) 
 @Produces(MediaType.TEXT_PLAIN) 
 public String updateSalary(String itemData) 
@@ -126,7 +126,21 @@ public String updateSalary(String itemData)
  String c = itemObject.get("year").getAsString(); 
  String d = itemObject.get("amount").getAsString(); 
  
- String output = itemObj.updateSalary(e,a,b,c,d); 
+ String output = itemObj.updateSalary(a,b,c,d,e); 
+return output; 
+}
+@DELETE
+@Path("/") 
+@Consumes(MediaType.APPLICATION_XML) 
+@Produces(MediaType.TEXT_PLAIN) 
+public String deleteItem(String itemData) 
+{ 
+//Convert the input string to an XML document
+ Document doc = Jsoup.parse(itemData, "", Parser.xmlParser()); 
+ 
+//Read the value from the element <itemID>
+ String itemID = doc.select("itemID").text(); 
+ String output = itemObj.deleteItem(itemID); 
 return output; 
 }
 
